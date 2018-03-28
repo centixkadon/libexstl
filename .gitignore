@@ -1,7 +1,6 @@
 
-# Binary Output
-bin
-lib
+# Output
+build
 
 # CMake.gitignore
 CMakeCache.txt
