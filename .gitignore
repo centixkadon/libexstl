@@ -1,32 +1,21 @@
-# Prerequisites
-*.d
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+# Binary Output
+bin
+lib
 
-# Precompiled Headers
-*.gch
-*.pch
+# CMake.gitignore
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+# vim
+*.swp
 
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
+# Visual Studio Code
+.vscode
