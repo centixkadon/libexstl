@@ -1,0 +1,30 @@
+
+#pragma once
+
+#include <chrono>
+#include <sstream>
+
+namespace std {
+namespace chrono {
+
+class tick_diff {
+public:
+  typedef tick_diff _Myt;
+
+  static size_t const tick_diff_length = 10;
+  tick_diff(_Myt const &) = delete;
+  tick_diff(string const & str);
+  _Myt & operator=(_Myt const &) = delete;
+
+  string diff();
+
+  inline operator double() const { return _diff; }
+
+private:
+  string _str;
+  high_resolution_clock::time_point _tick;
+  double _diff;
+};
+
+} // namespace chrono
+} // namespace std
