@@ -20,6 +20,8 @@ string tick_diff::diff() {
   return ss.str();
 }
 
+size_t tick_diff::tick_diff_length = 10;
+
 } // namespace chrono
 
 } // namespace std

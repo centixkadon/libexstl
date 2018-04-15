@@ -1,22 +1,17 @@
 
 #pragma once
 
-#include <memory>
-
 namespace std {
 
-template <typename _ostream, typename _Ty, typename _Alloc = allocator<_Ty>, template <typename, typename> typename _container>
-_ostream & operator<<(_ostream & _out, _container<_Ty, _Alloc> const & rhs) {
-  _out << "[";
-  if (!rhs.empty()) {
-    auto p = rhs.begin();
-    _out << " " << *p;
-    for (++p; p != rhs.end(); ++p) {
-      _out << ", " << *p;
-    }
-  }
-  _out << " ]";
-  return _out;
+template <typename _Elem, typename _Traits>
+class basic_ostream;
+
+template <typename _Elem, typename _Traits, typename _Ty, typename _Alloc, template <typename, typename> typename _Container>
+basic_ostream<_Elem, _Traits> & operator<<(basic_ostream<_Elem, _Traits> & _Ostr, _Container<_Ty, _Alloc> const & _Right) {
+  _Ostr << "[";
+  for (auto const & _Val : _Right) { _Ostr << " " << _Val; }
+  _Ostr << " ]";
+  return _Ostr;
 }
 
 } // namespace std

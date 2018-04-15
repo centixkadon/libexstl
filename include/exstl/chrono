@@ -8,17 +8,18 @@ namespace std {
 namespace chrono {
 
 class tick_diff {
-public:
   typedef tick_diff _Myt;
 
-  static size_t const tick_diff_length = 10;
+public:
+  explicit tick_diff(string const & str);
   tick_diff(_Myt const &) = delete;
-  tick_diff(string const & str);
   _Myt & operator=(_Myt const &) = delete;
 
   string diff();
 
   inline operator double() const { return _diff; }
+
+  static size_t tick_diff_length;
 
 private:
   string _str;

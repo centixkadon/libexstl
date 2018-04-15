@@ -10,7 +10,7 @@ class thread_endl_type {
 public:
   typedef thread_endl_type _Myt;
   thread_endl_type() = delete;
-  thread_endl_type(_Myt const & _Val) : _mutex(_Val._mutex) {};
+  thread_endl_type(_Myt const & _Val) : _mutex(_Val._mutex) {}
   explicit thread_endl_type(mutex & mtx) : _mutex(mtx) {}
   _Myt & operator=(_Myt &) = delete;
 
@@ -37,7 +37,7 @@ public:
 
   thread_basic_ostream() = delete;
   thread_basic_ostream(_Myt const &) = delete;
-  thread_basic_ostream(_Mybase & _Ostr) : _out(_Ostr) {}
+  thread_basic_ostream(_Mybase & Ostr) : _Ostr(Ostr) {}
   _Myt & operator=(_Myt const &) = delete;
 
   inline void lock() { _mutex.lock(); }
@@ -45,24 +45,24 @@ public:
   template <typename _Ty>
   inline _Mybase & operator<<(_Ty const & _Val) {
     lock();
-    return _out << _Val;
+    return _Ostr << _Val;
   }
   template <typename _Ty>
   inline _Mybase & operator<<(_Ty const * _Val) {
     lock();
-    return _out << _Val;
+    return _Ostr << _Val;
   }
   inline _Mybase & operator<<(_Mybase & (*_Pfn)(_Mybase &)) {
     lock();
-    return _out << _Pfn;
+    return _Ostr << _Pfn;
   }
   inline _Mybase & operator<<(_Myios & (*_Pfn)(_Myios &)) {
     lock();
-    return _out << _Pfn;
+    return _Ostr << _Pfn;
   }
   inline _Mybase & operator<<(ios_base & (*_Pfn)(ios_base &)) {
     lock();
-    return _out << _Pfn;
+    return _Ostr << _Pfn;
   }
 
   thread_endl_type endl() {
@@ -70,7 +70,7 @@ public:
   }
 
 private:
-  _Mybase & _out;
+  _Mybase & _Ostr;
   mutex _mutex;
 };
 

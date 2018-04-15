@@ -1,6 +1,8 @@
 
 # Output
 build
+bin
+lib
 
 # CMake.gitignore
 CMakeCache.txt

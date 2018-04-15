@@ -22,7 +22,7 @@ void thread_pop(thread_list<size_t> & p) {
 int main() {
   cout << "exstl test" << endl;
 
-  cout << vector<int>{1, 2, 3, 5, 7, 11} << endl;
+  cout << vector<vector<int>>{ { 1, 2, 3, 5 }, { 7, 11 }, {} } << endl;
 
   thread_list<size_t> p;
   thread th1(thread_push, ref(p)), th2(thread_pop, ref(p));

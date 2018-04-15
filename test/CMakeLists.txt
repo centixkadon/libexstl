@@ -10,11 +10,11 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-find_package(Threads REQUIRED)
+find_package(libexstl PATHS ../.. REQUIRED)
 
-add_subdirectory(.. ${PROJECT_NAME})
+add_subdirectory(${libexstl_PATH} libexstl)
 
-include_directories(../include)
+include_directories(${libexstl_INCLUDE_DIR})
 
 add_executable(${PROJECT_NAME}_test main.cpp)
-target_link_libraries(${PROJECT_NAME}_test ${PROJECT_NAME} ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(${PROJECT_NAME}_test ${PROJECT_NAME})

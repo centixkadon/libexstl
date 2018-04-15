@@ -30,48 +30,51 @@ public:
   typedef std::reverse_iterator<iterator> reverse_iterator;
   typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
 
-  thread_list(size_type _MaxSize = (size_type)-1) : _Mybase(), _max_size(_MaxSize) {}
+  thread_list() : _Mybase(), _mutex(), _closed(false) {}
   thread_list(_Myt const & _Right) = delete;
   thread_list(_Mybase const & _Right) = delete;
   _Myt & operator=(_Mybase const & _Right) = delete;
 
   void push_back(_Ty && _Val) {
-    while (this->size() >= _max_size) { wait(); }
     _mutex.lock();
-    _Mybase::push_back(_Val);
+    _Mybase::push_back(forward<_Ty>(_Val));
     _mutex.unlock();
   }
   void push_back(_Ty const & _Val) {
-    while (this->size() >= _max_size) { wait(); }
     _mutex.lock();
     _Mybase::push_back(_Val);
     _mutex.unlock();
   }
 
-  inline reference front() {
-    while (this->empty()) { wait(); }
-    return _Mybase::front();
-  }
-  inline const_reference front() const {
-    while (this->empty()) { wait(); }
-    return _Mybase::front();
-  }
-
   void pop_front() {
-    while (this->empty()) { wait(); }
     _mutex.lock();
     _Mybase::pop_front();
     _mutex.unlock();
   }
 
+  inline void close() { _closed = true; }
+
+  inline bool operator!() const { return this->empty() && _closed; }
+  inline operator bool() const { return !!*this; }
+
+  bool pop_front(_Ty & _Val) {
+    while (this->empty()) {
+      if (!*this) return false;
+      _wait();
+    }
+    _Val = this->front();
+    pop_front();
+    return true;
+  }
+
 private:
-  void wait() {
+  void _wait() {
     // this_thread::sleep_for(chrono::milliseconds(100));
     this_thread::yield();
   }
 
-  size_type const _max_size;
   mutex _mutex;
+  bool _closed;
 };
 
 } // namespace std
